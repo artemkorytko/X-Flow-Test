@@ -1,5 +1,6 @@
 using System.Collections;
 using Core;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -8,35 +9,46 @@ namespace Shop
 {
     public class ShopBundleView : MonoBehaviour
     {
-        [SerializeField] private Text titleText;
+        [SerializeField] private TextMeshProUGUI titleText;
         [SerializeField] private Button infoButton; // "i"
         [SerializeField] private Button buyButton;
-        [SerializeField] private Text buyButtonText;
+        [SerializeField] private TextMeshProUGUI buyButtonText;
 
         private ShopBundle bundle;
+        private ShopBundleViewMode mode;
 
-        public void Setup(ShopBundle b)
+        public void Setup(ShopBundle bundle, ShopBundleViewMode mode)
         {
-            bundle = b;
-            titleText.text = b.Title;
+            this.bundle = bundle;
+            this.mode = mode;
+            titleText.text = bundle.Title;
+
             UpdateInteractable();
             buyButton.onClick.RemoveAllListeners();
             buyButton.onClick.AddListener(OnBuyClicked);
-            infoButton.onClick.RemoveAllListeners();
-            infoButton.onClick.AddListener(OnInfoClicked);
+            if (mode == ShopBundleViewMode.InDetail)
+            {
+                infoButton.gameObject.SetActive(false);
+            }
+            else
+            {
+                infoButton.onClick.RemoveAllListeners();
+                infoButton.onClick.AddListener(OnInfoClicked);
+            }
         }
 
         public void UpdateInteractable()
         {
             if (bundle == null) return;
+
             buyButton.interactable = bundle.CanBuy(PlayerData.Instance);
             buyButtonText.text = "Купить";
         }
 
         private void OnInfoClicked()
         {
-            // открываем сцену с карточкой (передаём ссылку через простой static или SceneManager + временный хранилище)
-            ShopSceneRouter.OpenBundleDetail(bundle);
+            DataBus.Push("selectedBundle", bundle);
+            NavigationService.OpenAdditive("ShopBundleScene");
         }
 
         private void OnBuyClicked()

@@ -1,27 +1,46 @@
+using Core;
 using UnityEngine;
+using UnityEngine.UI;
 
 
 namespace Shop
 {
     public class ShopBundleDetailView : MonoBehaviour
     {
-        [SerializeField] private ShopBundleView bundleView; // на сцене полный экран
+        [SerializeField] private ShopBundleView bundleView;
+        [SerializeField] private Button backButton;
+
+        private void Awake()
+        {
+            if (backButton)
+                backButton.onClick.AddListener(OnBack);
+            else
+                Debug.LogError("BackButton is not assigned in ShopBundleDetailView.");
+        }
+
+        private void OnDestroy()
+        {
+            if (backButton)
+                backButton.onClick.RemoveListener(OnBack);
+        }
 
         private void Start()
         {
-            var bundle = ShopSceneRouter.SelectedBundle;
+            var bundle = DataBus.Pull<ShopBundle>("selectedBundle");
+
             if (bundle == null)
             {
-                Debug.LogError("No bundle selected");
+                Debug.LogError("Bundle not found");
+                OnBack();
                 return;
             }
 
-            bundleView.Setup(bundle);
+            bundleView.Setup(bundle, ShopBundleViewMode.InDetail);
         }
 
         public void OnBack()
         {
-            UnityEngine.SceneManagement.SceneManager.LoadScene("ShopListScene");
+            NavigationService.Close("ShopBundleScene");
         }
     }
 }

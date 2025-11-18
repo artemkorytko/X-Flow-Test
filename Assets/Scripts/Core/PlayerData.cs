@@ -12,7 +12,7 @@ namespace Core
         {
             get
             {
-                if (_instance == null) throw new InvalidOperationException("PlayerData not initialized. Run GameBootstrapper.");
+                if (_instance == null) throw new InvalidOperationException("PlayerData not initialized");
 
                 return _instance;
             }
@@ -20,101 +20,34 @@ namespace Core
 
         public static void Initialize(PlayerData pd)
         {
-            if (_instance != null) throw new InvalidOperationException("PlayerData already initialized");
+            if (_instance != null) throw new InvalidOperationException("Already initialized");
 
             _instance = pd ?? throw new ArgumentNullException(nameof(pd));
         }
 
-        private readonly Dictionary<ResourceId, ResourceValue> _store = new Dictionary<ResourceId, ResourceValue>();
+        private readonly Dictionary<ResourceId, ResourceValue> _store = new();
 
-        // used by bootstrapper to seed resource with default value
-        public void SetResource(ResourceId id, ResourceValue value)
-        {
-            _store[id] = value;
-        }
+        public void SetResource(ResourceId id, ResourceValue value) => _store[id] = value;
 
-        public bool TryGetInt(ResourceId id, out int value)
-        {
-            if (_store.TryGetValue(id, out var rv))
-            {
-                value = rv.IntValue;
-                return true;
-            }
-
-            value = 0;
-            return false;
-        }
-
-        public int GetInt(ResourceId id)
-        {
-            return _store.TryGetValue(id, out var rv) ? rv.IntValue : 0;
-        }
-
-        public void SetInt(ResourceId id, int newVal)
-        {
-            if (!_store.TryGetValue(id, out var rv))
-            {
-                rv = new ResourceValue();
-                _store[id] = rv;
-            }
-
-            rv.IntValue = newVal;
-        }
+        public int GetInt(ResourceId id) => _store.TryGetValue(id, out var v) ? v.IntValue : 0;
+        public void SetInt(ResourceId id, int value) => _store[id] = new ResourceValue(value, GetFloat(id), GetString(id));
 
         public void ModifyInt(ResourceId id, int delta)
         {
-            if (!_store.TryGetValue(id, out var rv))
-            {
-                rv = new ResourceValue();
-                _store[id] = rv;
-            }
-
-            rv.IntValue += delta;
+            var cur = GetInt(id);
+            SetInt(id, cur + delta);
         }
 
-        // Float API
-        public float GetFloat(ResourceId id)
-        {
-            return _store.TryGetValue(id, out var rv) ? rv.FloatValue : 0f;
-        }
-
-        public void SetFloat(ResourceId id, float newVal)
-        {
-            if (!_store.TryGetValue(id, out var rv))
-            {
-                rv = new ResourceValue();
-                _store[id] = rv;
-            }
-
-            rv.FloatValue = newVal;
-        }
+        public float GetFloat(ResourceId id) => _store.TryGetValue(id, out var v) ? v.FloatValue : 0f;
+        public void SetFloat(ResourceId id, float value) => _store[id] = new ResourceValue(GetInt(id), value, GetString(id));
 
         public void ModifyFloat(ResourceId id, float delta)
         {
-            if (!_store.TryGetValue(id, out var rv))
-            {
-                rv = new ResourceValue();
-                _store[id] = rv;
-            }
-
-            rv.FloatValue += delta;
+            var cur = GetFloat(id);
+            SetFloat(id, cur + delta);
         }
 
-        // String API
-        public string GetString(ResourceId id)
-        {
-            return _store.TryGetValue(id, out var rv) ? rv.StringValue : null;
-        }
-
-        public void SetString(ResourceId id, string value)
-        {
-            if (!_store.TryGetValue(id, out var rv))
-            {
-                rv = new ResourceValue();
-                _store[id] = rv;
-            }
-
-            rv.StringValue = value;
-        }
+        public string GetString(ResourceId id) => _store.TryGetValue(id, out var v) ? v.StringValue : null;
+        public void SetString(ResourceId id, string value) => _store[id] = new ResourceValue(GetInt(id), GetFloat(id), value);
     }
 }

@@ -1,15 +1,12 @@
-using UnityEngine;
-
-
 namespace Core
 {
-    public class ResourceValue
+    public struct ResourceValue
     {
         public int IntValue;
         public float FloatValue;
         public string StringValue;
 
-        public ResourceValue(int i = 0, float f = 0f, string s = null)
+        public ResourceValue(int i, float f, string s)
         {
             IntValue = i;
             FloatValue = f;

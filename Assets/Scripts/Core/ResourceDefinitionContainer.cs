@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace Core
 {
-    [CreateAssetMenu(menuName = "Core/Resource ResourceDefinition Container")]
+    [CreateAssetMenu(menuName = "Core/Resource Definition Container")]
     public class ResourceDefinitionContainer : ScriptableObject
     {
         [SerializeField] private ResourceDefinition[] _resourceDefinitions;

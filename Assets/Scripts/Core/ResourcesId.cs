@@ -6,18 +6,19 @@ namespace Core
     [Serializable]
     public readonly struct ResourceId : IEquatable<ResourceId>
     {
-        public readonly string Domain; // e.g. "Health", "Gold", "Location", "VIP"
-        public readonly string Key;    // e.g. "Current", "Max", "Name"
+        public readonly string Value;
 
-        public ResourceId(string domain, string key)
+        public ResourceId(string value)
         {
-            Domain = domain ?? throw new ArgumentNullException(nameof(domain));
-            Key = key ?? throw new ArgumentNullException(nameof(key));
+            Value = value ?? throw new ArgumentNullException(nameof(value));
         }
 
-        public override int GetHashCode() => HashCode.Combine(Domain, Key);
-        public bool Equals(ResourceId other) => Domain == other.Domain && Key == other.Key;
+        public bool Equals(ResourceId other) => string.Equals(Value, other.Value, StringComparison.Ordinal);
         public override bool Equals(object obj) => obj is ResourceId r && Equals(r);
-        public override string ToString() => $"{Domain}:{Key}";
+        public override int GetHashCode() => Value != null ? Value.GetHashCode(StringComparison.Ordinal) : 0;
+        public override string ToString() => Value;
+
+        public static implicit operator ResourceId(string v) => new ResourceId(v);
+        public static implicit operator string(ResourceId id) => id.Value;
     }
 }
