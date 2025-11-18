@@ -18,15 +18,15 @@ namespace Core
                 switch (def.type)
                 {
                     case ResourceType.Int:
-                        pd.SetResource(def.Id, new ResourceValue(def.defaultInt, 0, null));
+                        pd.SetInt(def.Id, def.defaultInt);
                         break;
 
                     case ResourceType.Float:
-                        pd.SetResource(def.Id, new ResourceValue(0, def.defaultFloat, null));
+                        pd.SetFloat(def.Id, def.defaultFloat);
                         break;
 
                     case ResourceType.String:
-                        pd.SetResource(def.Id, new ResourceValue(0, 0, def.defaultString));
+                        pd.SetString(def.Id, def.defaultString);
                         break;
                 }
             }

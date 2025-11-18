@@ -26,7 +26,7 @@ namespace Shop
 
         private void Start()
         {
-            var bundle = DataBus.Pull<ShopBundle>("selectedBundle");
+            var bundle = DataBus.Pull(ShopDataKeys.SelectedBundle);
 
             if (bundle == null)
             {

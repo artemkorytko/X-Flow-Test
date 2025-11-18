@@ -13,7 +13,4 @@ MonoBehaviour:
   m_Name: Spend Health Action
   m_EditorClassIdentifier: 
   resource: {fileID: 11400000, guid: 4ff9af21073f94369864e356a91f1bb1, type: 2}
-  resourceType: 1
-  spendInt: 0
-  spendFloat: 30
-  spendString: 
+  spendAmount: 30

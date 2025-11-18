@@ -47,7 +47,7 @@ namespace Shop
 
         private void OnInfoClicked()
         {
-            DataBus.Push("selectedBundle", bundle);
+            DataBus.Push(ShopDataKeys.SelectedBundle, bundle);
             NavigationService.OpenAdditive("ShopBundleScene");
         }
 

@@ -12,8 +12,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cb1905ff3e4e4319a3085aee95923fc3, type: 3}
   m_Name: Spend Gold Action
   m_EditorClassIdentifier: 
-  resource: {fileID: 0}
-  resourceType: 0
-  spendInt: 20
-  spendFloat: 0
-  spendString: 
+  resource: {fileID: 11400000, guid: cfb70127cb83541679da31e5f9e5b886, type: 2}
+  spendAmount: 30

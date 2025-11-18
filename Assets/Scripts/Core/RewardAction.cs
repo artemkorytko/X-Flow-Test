@@ -4,33 +4,18 @@ using UnityEngine;
 
 namespace Core
 {
-    public class RewardAction : ScriptableObject, IShopAction
+    public abstract class RewardAction : ScriptableObject, IShopAction
     {
-        public ResourceDefinition resource;
-        public ResourceType resourceType;
+        /// <summary>
+        /// Проверка, можно ли выполнить награду для текущего состояния PlayerData.
+        /// По умолчанию награду всегда можно выдать, но домен может переопределить это поведение.
+        /// </summary>
+        public virtual bool CanExecute(PlayerData pd) => true;
 
-        public int addInt;
-        public float addFloat;
-        public string addString;
-
-        public bool CanExecute(PlayerData pd) => resource != null;
-
-        public void Execute(PlayerData pd)
-        {
-            switch (resourceType)
-            {
-                case ResourceType.Int:
-                    pd.ModifyInt(resource.Id, addInt);
-                    break;
-                case ResourceType.Float:
-                    pd.ModifyFloat(resource.Id, addFloat);
-                    break;
-                case ResourceType.String:
-                    pd.SetString(resource.Id, addString);
-                    break;
-                default:
-                    throw new ArgumentOutOfRangeException();
-            }
-        }
+        /// <summary>
+        /// Применение награды к PlayerData.
+        /// Конкретная логика применения реализуется в доменах.
+        /// </summary>
+        public abstract void Execute(PlayerData pd);
     }
 }

@@ -1,16 +1,3 @@
-namespace Core
-{
-    public struct ResourceValue
-    {
-        public int IntValue;
-        public float FloatValue;
-        public string StringValue;
-
-        public ResourceValue(int i, float f, string s)
-        {
-            IntValue = i;
-            FloatValue = f;
-            StringValue = s;
-        }
-    }
-}
+// Legacy type, больше не используется после перехода PlayerData на generic-хранилище.
+// Файл оставлен только для совместимости на случай, если где-то в сценах
+// остались сериализованные ссылки. Логика проекта на него не опирается.

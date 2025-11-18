@@ -4,32 +4,18 @@ using UnityEngine;
 
 namespace Core
 {
-    public class CostAction : ScriptableObject, IShopAction
+    public abstract class CostAction : ScriptableObject, IShopAction
     {
-        public ResourceDefinition resource;
-        public ResourceType resourceType;
-        public int spendInt;
-        public float spendFloat;
-        public string spendString;
+        /// <summary>
+        /// Проверка, можно ли выполнить действие для текущего состояния PlayerData.
+        /// Конкретная логика проверки реализуется в доменах.
+        /// </summary>
+        public abstract bool CanExecute(PlayerData pd);
 
-        public bool CanExecute(PlayerData pd) => resource != null;
-
-        public void Execute(PlayerData pd)
-        {
-            switch (resourceType)
-            {
-                case ResourceType.Int:
-                    pd.ModifyInt(resource.Id, -spendInt);
-                    break;
-                case ResourceType.Float:
-                    pd.ModifyFloat(resource.Id, -spendFloat);
-                    break;
-                case ResourceType.String:
-                    pd.SetString(resource.Id, spendString);
-                    break;
-                default:
-                    throw new ArgumentOutOfRangeException();
-            }
-        }
+        /// <summary>
+        /// Применение действия к PlayerData.
+        /// Конкретная логика применения реализуется в доменах.
+        /// </summary>
+        public abstract void Execute(PlayerData pd);
     }
 }

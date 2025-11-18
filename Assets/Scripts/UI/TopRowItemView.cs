@@ -49,19 +49,28 @@ namespace UI
             var pd = PlayerData.Instance;
             var id = entry.resource.Id;
 
-            switch (entry.resource.type)
+            // Если задано доменное действие, используем его
+            if (entry.plusAction != null)
             {
-                case ResourceType.Int:
-                    pd.ModifyInt(id, entry.addInt);
-                    break;
+                entry.plusAction.Execute(pd);
+            }
+            else
+            {
+                // legacy-поведение через addInt/addFloat/addString
+                switch (entry.resource.type)
+                {
+                    case ResourceType.Int:
+                        pd.ModifyInt(id, entry.addInt);
+                        break;
 
-                case ResourceType.Float:
-                    pd.ModifyFloat(id, entry.addFloat);
-                    break;
+                    case ResourceType.Float:
+                        pd.ModifyFloat(id, entry.addFloat);
+                        break;
 
-                case ResourceType.String:
-                    pd.SetString(id, entry.addString);
-                    break;
+                    case ResourceType.String:
+                        pd.SetString(id, entry.addString);
+                        break;
+                }
             }
 
             ShopUIEvents.BroadcastPlayerDataChanged();

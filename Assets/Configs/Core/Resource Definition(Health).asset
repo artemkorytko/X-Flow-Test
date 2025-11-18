@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Resource Definition(Health)
   m_EditorClassIdentifier: 
   id: Health
-  type: 1
-  defaultInt: 0
-  defaultFloat: 100
+  type: 0
+  defaultInt: 100
+  defaultFloat: 0
   defaultString: 

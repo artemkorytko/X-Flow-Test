@@ -13,7 +13,4 @@ MonoBehaviour:
   m_Name: Add Gold Action
   m_EditorClassIdentifier: 
   resource: {fileID: 11400000, guid: cfb70127cb83541679da31e5f9e5b886, type: 2}
-  resourceType: 0
-  addInt: 100
-  addFloat: 0
-  addString: 
+  addAmount: 100

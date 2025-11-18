@@ -25,5 +25,13 @@ namespace Core
             if (data.ContainsKey(key))
                 data.Remove(key);
         }
+
+        // Типобезопасные перегрузки
+
+        public static void Push<T>(DataBusKey<T> key, T value) => Push(key.Id, value);
+
+        public static T Pull<T>(DataBusKey<T> key) => Pull<T>(key.Id);
+
+        public static void Clear<T>(DataBusKey<T> key) => Clear(key.Id);
     }
 }

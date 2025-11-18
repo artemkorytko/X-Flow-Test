@@ -13,7 +13,4 @@ MonoBehaviour:
   m_Name: Add Vip Time Action
   m_EditorClassIdentifier: 
   resource: {fileID: 11400000, guid: 7a93f5c330bd14dd59594b238cc33856, type: 2}
-  resourceType: 1
-  addInt: 0
-  addFloat: 300
-  addString: 
+  addSeconds: 300

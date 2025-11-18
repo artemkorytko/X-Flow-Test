@@ -13,7 +13,4 @@ MonoBehaviour:
   m_Name: Change Location Action
   m_EditorClassIdentifier: 
   resource: {fileID: 11400000, guid: 091e9f03cf72941d09294411c2fa1256, type: 2}
-  resourceType: 0
-  addInt: 0
-  addFloat: 0
-  addString: New
+  targetLocation: New
